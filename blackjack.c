@@ -26,7 +26,6 @@ int main() {
     printf("Type 'h' for instructions, 's' to begin, or 'q' to quit.\n");
     printf("\n> ");
     scanf("%s", input);
-    printf(input);
 
     if (strcmp(input, "h")==0) {
       print_help();
