@@ -1,4 +1,4 @@
-# 2600final
+CS2600 Final Project: Blackjack!
 
 Progress as of 4/29/2025:
 
