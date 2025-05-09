@@ -14,7 +14,7 @@ struct Hand {
     bool bust;
 };
 
-// Function prototypes
+//function prototypes
 int draw_card();
 int calculate_score(struct Hand *hand);
 bool full_bust(struct Hand player_hands[MAX_HANDS]);
@@ -26,6 +26,7 @@ void reset_hands(struct Hand player_hands[MAX_HANDS], struct Hand *dealer_hand);
 void deal_or_hit(struct Hand *hand);
 void next_hand_not_bust_or_stand(struct Hand player_hands[MAX_HANDS], int *current_hand);
 
+//main
 int main() {
     srand(time(NULL)); //random seed each run
 
@@ -47,20 +48,20 @@ int main() {
         } else if (strcmp(input, "q") == 0) {
             break;
         } else if (strcmp(input, "s") == 0) {
-            // Reset hands
+            //reset hands
             reset_hands(player_hands, &dealer_hand);
 
-            // Initial deal
+            //initial deal
             deal_or_hit(&player_hands[0]);
             deal_or_hit(&dealer_hand);
 
-            // Game loop
+            //game loop
             int current_hand = -1;
             while (1) {
                 printf("\nYour hands:\n");
                 for (int i = 0; i < MAX_HANDS; i++) {
                     if (player_hands[i].count > 0) {
-                        // Print each hand
+                        //print each hand
                         printf("Hand %d: ", i + 1);
                         for (int j = 0; j < player_hands[i].count; j++) {
                             print_card(player_hands[i].cards[j]);
@@ -68,7 +69,7 @@ int main() {
                         player_score = calculate_score(&player_hands[i]);
                         printf("Score: %d\t", player_score);
 
-                        // Print hand status
+                        //print hand status
                         if (player_hands[i].bust) {
                             printf("BUST!\n");
                         } else if (player_hands[i].stand) {
@@ -79,11 +80,11 @@ int main() {
                     }
                 }
 
-                // Get the next hand for the player to play.
+                //get the next hand for the player to play
                 next_hand_not_bust_or_stand(player_hands, &current_hand);
                 player_score = calculate_score(&player_hands[current_hand]);
 
-                // Print dealer's hand (covered)
+                //print dealer's hand (covered)
                 printf("\nDealer's hand: ");
                 for (int j = 0; j < dealer_hand.count; j++) {
                     if (j == 0) {
@@ -94,7 +95,7 @@ int main() {
                 }
                 printf("Score: %d+\n", dealer_hand.cards[0]);
 
-                // Check if all hands are either bust or standing
+                //check if all hands are either bust or standing
                 if (!ready_to_finish(player_hands)) {
                     // Player's turn
                     bool valid_input = false;
@@ -106,10 +107,10 @@ int main() {
                         if (strcmp(input, "h") == 0) {
                             valid_input = true;
 
-                            // Hit the next card to the current hand
+                            //hit the next card to the current hand
                             deal_or_hit(&player_hands[current_hand]);
 
-                            // Check if the hand is bust
+                            //check if the hand is bust
                             player_score = calculate_score(&player_hands[current_hand]);
                             if (player_score > 21) {
                                 player_hands[current_hand].bust = true;
@@ -118,24 +119,25 @@ int main() {
                         } else if (strcmp(input, "s") == 0) {
                             valid_input = true;
 
-                            // Stand the current hand
+                            //stand the current hand
                             player_hands[current_hand].stand = true;
+                            
                         } else if (strcmp(input, "|") == 0) {
-                            // make sure the current hand has two pairs, also make sure the player
-                            // hasn't reached the maximum number of hands
+                            //make sure the current hand has two pairs, also make sure the player
+                            //hasn't reached the maximum number of hands
                             if (player_hands[current_hand].count == 2 && player_hands[current_hand].cards[0] == player_hands[current_hand].cards[1] && player_hands[MAX_HANDS-1].count == 0) {
                                 valid_input = true;
 
-                                // Split the hand
+                                //split the hand
                                 struct Hand new_hand = {{0}, 0, false, false};
                                 new_hand.cards[new_hand.count++] = player_hands[current_hand].cards[1];
 
-                                // Change the current hand
+                                //change the current hand
                                 player_hands[current_hand].count = 1;
                                 player_hands[current_hand].stand = false;
                                 player_hands[current_hand].bust = false;
 
-                                // Add the new hand to the list of hands
+                                //add the new hand to the list of hands
                                 player_hands[current_hand + 1] = new_hand;
                                 printf("Hand %d split into two hands!\n", current_hand + 1);
                             } else {
@@ -146,20 +148,20 @@ int main() {
                         }
                     }
                 } else {
-                    // End game phase, dealer's turn?
+                    //cnd game phase, dealer's turn?
                     printf("\nAll hands are either bust or standing.\n");
 
-                    // Only play the dealer if not all player hands are bust (atleast one stand)
+                    //only play the dealer if not all player hands are bust (atleast one stand)
                     if (!full_bust(player_hands)) {
-                        // Viciously take all my money at the MGM Grand in Las Vegas, yes i am talking from personal experience. Who gets five blackjacks in a row? 
-                        // Apparently the house.
+                        //viciously take all my money at the MGM Grand in Las Vegas, yes i am talking from personal experience. Who gets five blackjacks in a row? 
+                        //apparently the house.
                         while (dealer_score < 17) {
                             deal_or_hit(&dealer_hand);
                             dealer_score = calculate_score(&dealer_hand);
                         }
                     }
 
-                    // Reveal the dealer's hand
+                    //reveal the dealer's hand
                     printf("\nDealer's final hand: ");
                     for (int j = 0; j < dealer_hand.count; j++) {
                         print_card(dealer_hand.cards[j]);
@@ -167,7 +169,7 @@ int main() {
                     dealer_score = calculate_score(&dealer_hand);
                     printf("Score: %d\n", dealer_score);
 
-                    // Check if the dealer busted
+                    //check if the dealer busted
                     if (dealer_score > 21) {
                         dealer_hand.bust = true;
                         printf("Dealer bust!\n");
@@ -175,7 +177,7 @@ int main() {
                         dealer_hand.stand = true;
                     }
 
-                    // Determine winner
+                    //determine winner
                     for (int i = 0; i < MAX_HANDS; i++) {
                         // Only check played hands
                         if (player_hands[i].count > 0) {
@@ -192,7 +194,6 @@ int main() {
                             }
                         }
                     }
-
                     break; // exit the game loop so we can start a new game
                 }
             }
@@ -200,25 +201,24 @@ int main() {
             printf("Unknown command. Type 'h' for instructions.\n");
         }
     }
-
     printf("Thanks for playing!\n");
     return 0;
 }
 
-// Draws a card between 1 (Ace) and 11 (Jack/Queen/King are 10)
+//draws a card between 1 (Ace) and 11 (Jack/Queen/King are 10)
 int draw_card() {
     int card = rand() % 13 + 1;
     return (card > 10) ? 10 : card;
 }
 
-// Prints a card nicely
+//prints a card nicely
 void print_card(int card) {
     if (card == 1) printf("[A] ");
     else if (card == 10) printf("[10] ");
     else printf("[%d] ", card);
 }
 
-// Calculates score, handling Aces (1 or 11)
+//calculates score, handling Aces (1 or 11)
 int calculate_score(struct Hand *hand) {
     int score = 0;
     int ace_count = 0;
@@ -228,7 +228,7 @@ int calculate_score(struct Hand *hand) {
         if (hand->cards[i] == 1) ace_count++;
     }
 
-    // Upgrade Aces from 1 to 11 if it helps and doesn't bust
+    //upgrade Aces from 1 to 11 if it helps and doesn't bust
     while (ace_count > 0 && score + 10 <= 21) {
         score += 10;
         ace_count--;
@@ -239,7 +239,7 @@ int calculate_score(struct Hand *hand) {
 
 // iterates through the hands and resets them
 void reset_hands(struct Hand player_hands[MAX_HANDS], struct Hand *dealer_hand) {
-    // reset player hands
+    //reset player hands
     for (int i = 0; i < MAX_HANDS; i++) {
         player_hands[i].count = 0;
         player_hands[i].stand = false;
@@ -252,7 +252,7 @@ void reset_hands(struct Hand player_hands[MAX_HANDS], struct Hand *dealer_hand) 
     dealer_hand->bust = false;
 }
 
-// gives each hand a new set of cards
+//gives each hand a new set of cards
 void deal_or_hit(struct Hand *hand) {
     // if the hand has more than 0 cards, it's a hit
     if (hand->count > 0) {
@@ -264,8 +264,8 @@ void deal_or_hit(struct Hand *hand) {
     }
 }
 
-// checks if all player hands are bust, this is used to determine whether the dealer
-// needs to play at all or not
+//checks if all player hands are bust, this is used to determine whether the dealer
+//needs to play at all or not
 bool full_bust(struct Hand player_hands[MAX_HANDS]) {
     for (int i = 0; i < MAX_HANDS; i++) {
         if (!player_hands[i].bust && player_hands[i].count > 0) {
@@ -275,8 +275,8 @@ bool full_bust(struct Hand player_hands[MAX_HANDS]) {
     return true;
 }
 
-// checks if all player hands are either bust or standing, this is used to determine
-// whether to enter the end game phase or not
+//checks if all player hands are either bust or standing, this is used to determine
+//whether to enter the end game phase or not
 bool ready_to_finish(struct Hand player_hands[MAX_HANDS]) {
     bool all_bust = true;
     for (int i = 0; i < MAX_HANDS; i++) {
@@ -290,10 +290,10 @@ bool ready_to_finish(struct Hand player_hands[MAX_HANDS]) {
     return all_bust;
 }
 
-// find the next hand that is not bust or standing
-// this is used to determine which hand to play next
-// it will skip over any hands that are bust or standing
-// and will return -1 if there are no hands left to play
+//find the next hand that is not bust or standing
+//this is used to determine which hand to play next
+//it will skip over any hands that are bust or standing
+//and will return -1 if there are no hands left to play
 void next_hand_not_bust_or_stand(struct Hand player_hands[MAX_HANDS], int *current_hand) {
     bool hands_before_not_bust = false;
     for (int i = *current_hand; i < MAX_HANDS; i++) {
@@ -309,19 +309,21 @@ void next_hand_not_bust_or_stand(struct Hand player_hands[MAX_HANDS], int *curre
     *current_hand = -1;
 }
 
-// Help message
+//help message
 void print_help() {
-    printf("\n--- Blackjack Help ---\n");
+    printf("\n---- Blackjack Menu ----\n");
     printf("Goal: Get as close to 21 as possible without going over.\n");
-    printf("You vs the Dealer.\n");
+    printf("Match Set: You vs The Dealer.\n\n");
     printf("Commands:\n");
     printf("  s - start (begin a new game)\n");
     printf("  h - help (show this help message)\n");
-    printf("Commands in game:\n");
+    printf("  q - quit (quit the game)\n\n");
+    printf("Game Commands:\n");
     printf("  h - hit (draw another card)\n");
     printf("  s - stand (end your turn)\n");
-    printf("  | - split (split your hand into two)\n");
+    printf("  | - split (split your hand into two)\n\n");
+    printf("Instructions:\n");
     printf("Cards: 2-10 as numbered, face cards are 10, Ace is 1 or 11.\n");
     printf("Dealer stands on 17 or higher.\n");
-    printf("----------------------\n");
+    printf("------------------------\n\n");
 }
