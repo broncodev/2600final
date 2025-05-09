@@ -1,8 +1,23 @@
-CS2600 Final Project: Blackjack!
+#**CS2600 Final Project: BlackJack Game!**
 
-Progress as of 4/29/2025:
+##**Overview**
+This is a terminal-based BlackJack game written in C, which allows a user to play against a dealer with support for standard BlackJack features like hitting, standing, and hand splitting. The game supports up to four player hands (due to splitting) and includes realistic scoring mechanics with Ace handling.
 
-The first version of blackjack was developed. However, the group would like to add some portions, such as splitting, a high score function, and achievements.
-- Splitting would allow the player to play two hands after receiving a pair (two cards of the same value), and also bet on both hands, potentially increasing profits or heavy losses.
-- The score function would relate to the actual betting portion of blackjack, where the player places a bet on their hand.
-- Achievements would be based on certain actions that occur during the game. This is partly inspired by Balatro, the poker rogue-lite game, where the player plays for score and can receive achievements for action such as playing a number of rounds, playing a hand a certain number of times, etc. For blackjack, some achievements would be for example: beating the dealer for the first time, getting 21 as your hand total in two cards, winning streaks, etc. Potentially, these achievements and high scores can be stored in a file and accessed at a later time.
+###**How To Play**:
+- **START**: Type s to start game.
+- **HELP**: Type h for instructions.
+- **QUIT**: Type q to quit game.
+- During each turn:
+    Type h to hit (draw another card).
+    Type s to stand (end your turn for that hand).
+    Type | to split a pair into two hands (if allowed).
+
+###**Game Mechanics** **
+Cards are randomly drawn with values from 1 (Ace) to 10. The dealer starts with one card. Each player hand starts with two cards. After all hands are played, dealer reveals hand and draws until score is at least 17. 
+
+###**Contributors**
+  * David Alvarez
+  * Landon Escorcio
+  * Kenny Hyunh
+  * Joshua Owen
+  * Jenni Puga-Raya
