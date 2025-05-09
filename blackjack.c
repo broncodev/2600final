@@ -8,6 +8,13 @@
 #define MAX_HANDS 4
 #define ACHIEVE_FILE "achieve.txt"
 
+// Authors:
+// David Alvarez
+// Landon Escorcio
+// Kenny Hyunh
+// Joshua Owen
+// Jenni Puga-Raya
+
 struct Hand {
     int cards[MAX_CARDS];
     int count;
@@ -56,7 +63,7 @@ int main() {
             print_help();
         } else if (strcmp(input, "q") == 0) {
             break;
-        } else if (strcmp(input, "a") == 0){ 
+        } else if (strcmp(input, "a") == 0){ S
             read_achievement();
         } else if (strcmp(input, "s") == 0) {
             // Reset hands
