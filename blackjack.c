@@ -439,12 +439,6 @@ void write_achievement(int wins, int losses, int ties, int final_points, int bla
     fprintf(file, "Wins: %d\nLosses: %d\nTies: %d\nHigh score: %d\nBlackjacks: %d\n", 
             wins, losses, ties, current_high_score, blackjack_score);
     fclose(file);
-
-    if (current_high_score < final_points) {
-        printf("\n*******************************************\n");
-        printf("* CONGRATULATIONS! NEW HIGH SCORE: %d! *\n", final_points);
-        printf("*******************************************\n\n");
-    }
 }
 
 // Read achievements from file
