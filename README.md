@@ -26,8 +26,8 @@ This is a terminal-based BlackJack game written in C, which allows a user to pla
 5. Achievements & High Score Tracking: Win, Lose, Tie
 
 ### **Contributors**
-  * David Alvarez
-  * Landon Escorcio
-  * Kenny Hyunh
-  * Joshua Owen
-  * Jenni Puga-Raya
+  * David Alvarez (Derylsharpe)
+  * Landon Escorcio (broncodev)
+  * Kenny Huynh (KennHuynh)
+  * Joshua Owen (jaoCPP)
+  * Jenni Puga-Raya (jenniraya)
